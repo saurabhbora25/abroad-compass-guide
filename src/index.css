@@ -2,39 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Study and Settle Abroad Design System - Professional, clean, minimal
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 225 15% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 225 15% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 225 15% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Professional blue palette */
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --primary-dark: 217 91% 45%;
+    --primary-light: 217 91% 75%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 16% 93%;
+    --secondary-foreground: 225 15% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 16% 96%;
+    --muted-foreground: 215 13% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 210 16% 90%;
+    --input: 210 16% 90%;
+    --ring: 217 91% 60%;
+
+    /* Custom semantic colors */
+    --hero-bg: 220 26% 14%;
+    --hero-text: 0 0% 100%;
+    --hero-subtitle: 210 16% 82%;
+    
+    --country-card: 0 0% 100%;
+    --country-card-hover: 217 91% 97%;
+    --country-cost: 217 91% 60%;
+    
+    --pricing-card: 0 0% 100%;
+    --pricing-accent: 142 76% 36%;
+    --pricing-discount: 0 84% 60%;
+    
+    --section-bg: 210 16% 98%;
+    
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(220 26% 14%), hsl(217 91% 25%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 16% 98%));
+    
+    /* Shadows */
+    --shadow-card: 0 4px 6px -1px hsl(217 91% 60% / 0.1), 0 2px 4px -1px hsl(217 91% 60% / 0.06);
+    --shadow-elevated: 0 10px 15px -3px hsl(217 91% 60% / 0.1), 0 4px 6px -2px hsl(217 91% 60% / 0.05);
+    
+    /* Typography */
+    --font-hero: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
     --radius: 0.5rem;
 

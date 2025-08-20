@@ -26,7 +26,9 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
+					foreground: 'hsl(var(--primary-foreground))',
+					dark: 'hsl(var(--primary-dark))',
+					light: 'hsl(var(--primary-light))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -52,6 +54,24 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				hero: {
+					bg: 'hsl(var(--hero-bg))',
+					text: 'hsl(var(--hero-text))',
+					subtitle: 'hsl(var(--hero-subtitle))'
+				},
+				country: {
+					card: 'hsl(var(--country-card))',
+					hover: 'hsl(var(--country-card-hover))',
+					cost: 'hsl(var(--country-cost))'
+				},
+				pricing: {
+					card: 'hsl(var(--pricing-card))',
+					accent: 'hsl(var(--pricing-accent))',
+					discount: 'hsl(var(--pricing-discount))'
+				},
+				section: {
+					bg: 'hsl(var(--section-bg))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
@@ -62,6 +82,18 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				}
+			},
+			backgroundImage: {
+				'gradient-hero': 'var(--gradient-hero)',
+				'gradient-card': 'var(--gradient-card)'
+			},
+			boxShadow: {
+				'card': 'var(--shadow-card)',
+				'elevated': 'var(--shadow-elevated)'
+			},
+			fontFamily: {
+				'hero': 'var(--font-hero)',
+				'body': 'var(--font-body)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
