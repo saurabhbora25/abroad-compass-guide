@@ -3,13 +3,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Euro, MessageCircle } from 'lucide-react';
 import ChatbotModal from './ChatbotModal';
+import germanyImage from '@/assets/germany-city.jpg';
 
 interface Country {
   name: string;
   tuition: number;
   living: number;
   total: number;
-  image: string;
+  image: string | any;
   description: string;
 }
 
@@ -19,7 +20,7 @@ const countries: Country[] = [
     tuition: 300,
     living: 11000,
     total: 11300,
-    image: '/placeholder-germany.jpg',
+    image: germanyImage,
     description: 'Home to world-class engineering and research universities'
   },
   {
@@ -86,10 +87,22 @@ const CountrySection = () => {
             >
               <CardHeader className="pb-3">
                 <div className="relative">
-                  <div className="w-full h-32 bg-muted rounded-lg mb-4 flex items-center justify-center">
-                    <span className="text-muted-foreground text-sm">
-                      {country.name} Image
-                    </span>
+                  <div className="w-full h-32 bg-muted rounded-lg mb-4 overflow-hidden">
+                    <img 
+                      src={typeof country.image === 'string' ? country.image : country.image} 
+                      alt={`${country.name} landscape`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        target.nextElementSibling?.classList.remove('hidden');
+                      }}
+                    />
+                    <div className="hidden w-full h-full flex items-center justify-center bg-muted">
+                      <span className="text-muted-foreground text-sm">
+                        {country.name} Image
+                      </span>
+                    </div>
                   </div>
                   <Badge className="absolute top-2 right-2 bg-primary text-primary-foreground">
                     EU Country
