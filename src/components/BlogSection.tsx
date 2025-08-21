@@ -4,6 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { ArrowRight, BookOpen, Clock, User } from 'lucide-react';
 
+import studyAbroadImage from '@/assets/blog-study-abroad.jpg';
+import visaGuideImage from '@/assets/blog-visa-guide.jpg';
+import universityLifeImage from '@/assets/blog-university-life.jpg';
+import applicationTipsImage from '@/assets/blog-application-tips.jpg';
+
 const featuredArticles = [
   {
     id: 1,
@@ -13,7 +18,7 @@ const featuredArticles = [
     readTime: '8 min read',
     author: 'Zaid',
     date: 'Dec 15, 2024',
-    image: '/placeholder-germany-blog.jpg'
+    image: studyAbroadImage
   },
   {
     id: 2,
@@ -23,7 +28,7 @@ const featuredArticles = [
     readTime: '5 min read',
     author: 'Saurabh',
     date: 'Dec 12, 2024',
-    image: '/placeholder-test-blog.jpg'
+    image: visaGuideImage
   },
   {
     id: 3,
@@ -33,7 +38,17 @@ const featuredArticles = [
     readTime: '6 min read',
     author: 'Vivian',
     date: 'Dec 10, 2024',
-    image: '/placeholder-student-life.jpg'
+    image: universityLifeImage
+  },
+  {
+    id: 4,
+    title: 'University Application Tips for Success',
+    excerpt: 'Essential strategies and insider tips to make your university applications stand out from the crowd.',
+    category: 'Application Process',
+    readTime: '7 min read',
+    author: 'Zaid',
+    date: 'Dec 8, 2024',
+    image: applicationTipsImage
   }
 ];
 
@@ -100,14 +115,26 @@ const BlogSection = () => {
           <h3 className="text-2xl font-bold text-foreground mb-8 text-center">
             Featured Articles
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredArticles.map((article) => (
               <Card key={article.id} className="hover:shadow-elevated transition-all duration-300 hover:-translate-y-1 border-border group cursor-pointer">
                 <CardHeader className="p-0">
-                  <div className="w-full h-48 bg-muted rounded-t-lg flex items-center justify-center">
-                    <span className="text-muted-foreground text-sm">
-                      {article.title.split(' ').slice(0, 2).join(' ')} Image
-                    </span>
+                  <div className="w-full h-48 bg-muted rounded-t-lg overflow-hidden">
+                    <img 
+                      src={article.image} 
+                      alt={article.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        target.nextElementSibling?.classList.remove('hidden');
+                      }}
+                    />
+                    <div className="hidden w-full h-full flex items-center justify-center bg-muted">
+                      <span className="text-muted-foreground text-sm">
+                        {article.title.split(' ').slice(0, 2).join(' ')} Image
+                      </span>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent className="p-6">

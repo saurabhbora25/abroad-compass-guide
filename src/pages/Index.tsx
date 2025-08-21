@@ -1,6 +1,7 @@
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import CountrySection from '@/components/CountrySection';
+import PricingSection from '@/components/PricingSection';
 import FloatingChatbot from '@/components/FloatingChatbot';
 
 const Index = () => {
@@ -10,6 +11,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <CountrySection />
+        <PricingSection />
       </main>
       
       {/* Footer */}

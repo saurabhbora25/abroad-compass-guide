@@ -4,6 +4,10 @@ import { Badge } from '@/components/ui/badge';
 import { Euro, MessageCircle } from 'lucide-react';
 import ChatbotModal from './ChatbotModal';
 import germanyImage from '@/assets/germany-city.jpg';
+import hungaryImage from '@/assets/hungary-city.jpg';
+import croatiaImage from '@/assets/croatia-city.jpg';
+import franceImage from '@/assets/france-city.jpg';
+import denmarkImage from '@/assets/denmark-city.jpg';
 
 interface Country {
   name: string;
@@ -28,7 +32,7 @@ const countries: Country[] = [
     tuition: 3000,
     living: 8000,
     total: 11000,
-    image: '/placeholder-hungary.jpg',
+    image: hungaryImage,
     description: 'Rich cultural heritage with affordable quality education'
   },
   {
@@ -36,7 +40,7 @@ const countries: Country[] = [
     tuition: 2500,
     living: 7500,
     total: 10000,
-    image: '/placeholder-croatia.jpg',
+    image: croatiaImage,
     description: 'Beautiful coastal country with growing academic reputation'
   },
   {
@@ -44,7 +48,7 @@ const countries: Country[] = [
     tuition: 2770,
     living: 12000,
     total: 14770,
-    image: '/placeholder-france.jpg',
+    image: franceImage,
     description: 'Prestigious institutions and vibrant cultural life'
   },
   {
@@ -52,7 +56,7 @@ const countries: Country[] = [
     tuition: 0,
     living: 15000,
     total: 15000,
-    image: '/placeholder-denmark.jpg',
+    image: denmarkImage,
     description: 'Free tuition for EU students, high quality of life'
   }
 ];

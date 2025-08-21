@@ -17,19 +17,19 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 225 15% 15%;
 
-    /* Professional blue palette */
-    --primary: 217 91% 60%;
+    /* Modern blue hue palette */
+    --primary: 214 88% 52%;
     --primary-foreground: 0 0% 100%;
-    --primary-dark: 217 91% 45%;
-    --primary-light: 217 91% 75%;
+    --primary-dark: 214 88% 42%;
+    --primary-light: 214 88% 72%;
 
-    --secondary: 210 16% 93%;
-    --secondary-foreground: 225 15% 15%;
+    --secondary: 214 32% 91%;
+    --secondary-foreground: 214 15% 20%;
 
-    --muted: 210 16% 96%;
-    --muted-foreground: 215 13% 65%;
+    --muted: 214 32% 95%;
+    --muted-foreground: 214 15% 60%;
 
-    --accent: 217 91% 60%;
+    --accent: 214 88% 52%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -39,28 +39,28 @@ All colors MUST be HSL.
     --input: 210 16% 90%;
     --ring: 217 91% 60%;
 
-    /* Custom semantic colors */
-    --hero-bg: 220 26% 14%;
+    /* Modern blue hue semantic colors */
+    --hero-bg: 214 50% 12%;
     --hero-text: 0 0% 100%;
-    --hero-subtitle: 210 16% 82%;
+    --hero-subtitle: 214 30% 78%;
     
-    --country-card: 0 0% 100%;
-    --country-card-hover: 217 91% 97%;
-    --country-cost: 217 91% 60%;
+    --country-card: 214 60% 98%;
+    --country-card-hover: 214 88% 95%;
+    --country-cost: 214 88% 52%;
     
-    --pricing-card: 0 0% 100%;
-    --pricing-accent: 142 76% 36%;
+    --pricing-card: 214 60% 98%;
+    --pricing-accent: 155 70% 45%;
     --pricing-discount: 0 84% 60%;
     
-    --section-bg: 210 16% 98%;
+    --section-bg: 214 40% 96%;
     
-    /* Gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(220 26% 14%), hsl(217 91% 25%));
-    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 16% 98%));
+    /* Modern blue gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(214 50% 12%), hsl(214 88% 35%));
+    --gradient-card: linear-gradient(145deg, hsl(214 60% 98%), hsl(214 40% 96%));
     
-    /* Shadows */
-    --shadow-card: 0 4px 6px -1px hsl(217 91% 60% / 0.1), 0 2px 4px -1px hsl(217 91% 60% / 0.06);
-    --shadow-elevated: 0 10px 15px -3px hsl(217 91% 60% / 0.1), 0 4px 6px -2px hsl(217 91% 60% / 0.05);
+    /* Modern blue shadows */
+    --shadow-card: 0 4px 6px -1px hsl(214 88% 52% / 0.12), 0 2px 4px -1px hsl(214 88% 52% / 0.08);
+    --shadow-elevated: 0 10px 15px -3px hsl(214 88% 52% / 0.15), 0 4px 6px -2px hsl(214 88% 52% / 0.08);
     
     /* Typography */
     --font-hero: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;

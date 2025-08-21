@@ -28,7 +28,7 @@ const Header = () => {
               Home
             </a>
             <a
-              href="/pricing"
+              href="/#pricing"
               className="text-foreground hover:text-primary transition-colors font-medium"
             >
               Pricing
@@ -71,7 +71,7 @@ const Header = () => {
                 Home
               </a>
               <a
-                href="/pricing"
+                href="/#pricing"
                 onClick={() => setIsMenuOpen(false)}
                 className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary transition-colors"
               >
