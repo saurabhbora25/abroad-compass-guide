@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { submitConsultation, type ConsultationData } from '@/lib/supabase';
+import { useToast } from '@/hooks/use-toast';
 
 interface Country {
   name: string;
@@ -68,6 +70,16 @@ const FloatingChatbot: React.FC = () => {
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [aiProvider, setAiProvider] = useState<'deepseek' | 'openai' | 'mock'>('mock');
+  const [bookingFormData, setBookingFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    countryOfChoice: '',
+    levelOfEducation: '',
+    additionalComments: ''
+  });
+  const [isSubmittingBooking, setIsSubmittingBooking] = useState(false);
+  const { toast } = useToast();
 
   // API Integration functions
   const callDeepSeekAPI = async (message: string): Promise<string> => {
@@ -232,6 +244,58 @@ const FloatingChatbot: React.FC = () => {
 
   const showBooking = () => {
     setCurrentView('booking');
+  };
+
+  const handleBookingInputChange = (field: string, value: string) => {
+    setBookingFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleBookingSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmittingBooking(true);
+
+    try {
+      const consultationData: Omit<ConsultationData, 'id' | 'created_at' | 'updated_at'> = {
+        full_name: bookingFormData.fullName,
+        email: bookingFormData.email,
+        phone_number: bookingFormData.phone,
+        country_of_choice: selectedCountry?.name || bookingFormData.countryOfChoice || null,
+        level_of_education: bookingFormData.levelOfEducation || null,
+        selected_service: 'Chatbot Consultation Request',
+        service_price: 'Free Consultation',
+        additional_comments: bookingFormData.additionalComments || null
+      };
+
+      await submitConsultation(consultationData);
+      
+      toast({
+        title: "Consultation Booked!",
+        description: "We'll contact you within 24 hours to schedule your consultation.",
+      });
+
+      // Reset form and go back to menu
+      setBookingFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        countryOfChoice: '',
+        levelOfEducation: '',
+        additionalComments: ''
+      });
+      setCurrentView('menu');
+    } catch (error) {
+      console.error('Error submitting consultation:', error);
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmittingBooking(false);
+    }
   };
 
   const backToMenu = () => {
@@ -513,13 +577,15 @@ const FloatingChatbot: React.FC = () => {
                   <h4 className="font-bold text-lg">Book Consultation</h4>
                 </div>
                 
-                <form className="space-y-4">
+                <form onSubmit={handleBookingSubmit} className="space-y-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Full Name *
                     </label>
                     <input
                       type="text"
+                      value={bookingFormData.fullName}
+                      onChange={(e) => handleBookingInputChange('fullName', e.target.value)}
                       required
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
@@ -531,6 +597,8 @@ const FloatingChatbot: React.FC = () => {
                     </label>
                     <input
                       type="email"
+                      value={bookingFormData.email}
+                      onChange={(e) => handleBookingInputChange('email', e.target.value)}
                       required
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
@@ -542,6 +610,8 @@ const FloatingChatbot: React.FC = () => {
                     </label>
                     <input
                       type="tel"
+                      value={bookingFormData.phone}
+                      onChange={(e) => handleBookingInputChange('phone', e.target.value)}
                       required
                       className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
@@ -561,11 +631,68 @@ const FloatingChatbot: React.FC = () => {
                     </div>
                   )}
 
+                  {!selectedCountry && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Country of Choice
+                      </label>
+                      <select
+                        value={bookingFormData.countryOfChoice}
+                        onChange={(e) => handleBookingInputChange('countryOfChoice', e.target.value)}
+                        className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      >
+                        <option value="">Select your preferred country</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Hungary">Hungary</option>
+                        <option value="Croatia">Croatia</option>
+                        <option value="France">France</option>
+                        <option value="Denmark">Denmark</option>
+                        <option value="USA">USA</option>
+                        <option value="UK">UK</option>
+                        <option value="Ireland">Ireland</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Canada">Canada</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                  )}
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Level of Education
+                    </label>
+                    <select
+                      value={bookingFormData.levelOfEducation}
+                      onChange={(e) => handleBookingInputChange('levelOfEducation', e.target.value)}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select your education level</option>
+                      <option value="Bachelor's">Bachelor's</option>
+                      <option value="Master's">Master's</option>
+                      <option value="PhD">PhD</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Additional Comments
+                    </label>
+                    <textarea
+                      value={bookingFormData.additionalComments}
+                      onChange={(e) => handleBookingInputChange('additionalComments', e.target.value)}
+                      placeholder="Any specific questions or requirements?"
+                      rows={3}
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    />
+                  </div>
+
                   <button
                     type="submit"
+                    disabled={isSubmittingBooking || !bookingFormData.fullName || !bookingFormData.email || !bookingFormData.phone}
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
                   >
-                    Book Consultation
+                    {isSubmittingBooking ? 'Booking...' : 'Book Consultation'}
                   </button>
                 </form>
               </div>

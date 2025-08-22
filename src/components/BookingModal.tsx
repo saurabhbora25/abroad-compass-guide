@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { CalendarDays, CheckCircle } from 'lucide-react';
+import { submitConsultation, type ConsultationData } from '@/lib/supabase';
 
 interface PricingTier {
   id: string;
@@ -39,25 +40,14 @@ const BookingModal = ({ isOpen, onClose, selectedService }: BookingModalProps) =
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    phone: '',
-    countryChoice: '',
-    educationLevel: '',
-    preferredService: '',
-    comments: ''
+    phoneNumber: '',
+    countryOfChoice: '',
+    levelOfEducation: '',
+    additionalComments: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
-
-  // Set preferred service when modal opens
-  useState(() => {
-    if (selectedService) {
-      setFormData(prev => ({
-        ...prev,
-        preferredService: selectedService.title
-      }));
-    }
-  });
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
@@ -70,9 +60,19 @@ const BookingModal = ({ isOpen, onClose, selectedService }: BookingModalProps) =
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const consultationData: Omit<ConsultationData, 'id' | 'created_at' | 'updated_at'> = {
+        full_name: formData.fullName,
+        email: formData.email,
+        phone_number: formData.phoneNumber,
+        country_of_choice: formData.countryOfChoice || null,
+        level_of_education: formData.levelOfEducation || null,
+        selected_service: selectedService?.title || null,
+        service_price: selectedService?.price || null,
+        additional_comments: formData.additionalComments || null
+      };
+
+      await submitConsultation(consultationData);
       
       setIsSubmitted(true);
       toast({
@@ -80,6 +80,7 @@ const BookingModal = ({ isOpen, onClose, selectedService }: BookingModalProps) =
         description: "We'll contact you within 24 hours to schedule your consultation.",
       });
     } catch (error) {
+      console.error('Error submitting consultation:', error);
       toast({
         title: "Error",
         description: "Something went wrong. Please try again.",
@@ -94,11 +95,10 @@ const BookingModal = ({ isOpen, onClose, selectedService }: BookingModalProps) =
     setFormData({
       fullName: '',
       email: '',
-      phone: '',
-      countryChoice: '',
-      educationLevel: '',
-      preferredService: selectedService?.title || '',
-      comments: ''
+      phoneNumber: '',
+      countryOfChoice: '',
+      levelOfEducation: '',
+      additionalComments: ''
     });
     setIsSubmitted(false);
   };
@@ -137,7 +137,7 @@ const BookingModal = ({ isOpen, onClose, selectedService }: BookingModalProps) =
                 Thank you, {formData.fullName}!
               </h3>
               <p className="text-muted-foreground">
-                We've received your consultation request for {formData.preferredService}.
+                We've received your consultation request for {selectedService?.title || 'our services'}.
                 Our team will contact you within 24 hours to schedule your session.
               </p>
             </div>
@@ -196,26 +196,26 @@ const BookingModal = ({ isOpen, onClose, selectedService }: BookingModalProps) =
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone" className="text-foreground">
+              <Label htmlFor="phoneNumber" className="text-foreground">
                 Phone Number *
               </Label>
               <Input
-                id="phone"
+                id="phoneNumber"
                 type="tel"
-                value={formData.phone}
-                onChange={(e) => handleInputChange('phone', e.target.value)}
+                value={formData.phoneNumber}
+                onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
                 required
                 placeholder="Enter your phone number"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="countryChoice" className="text-foreground">
+              <Label htmlFor="countryOfChoice" className="text-foreground">
                 Country of Choice
               </Label>
               <Select
-                value={formData.countryChoice}
-                onValueChange={(value) => handleInputChange('countryChoice', value)}
+                value={formData.countryOfChoice}
+                onValueChange={(value) => handleInputChange('countryOfChoice', value)}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select your preferred country" />
@@ -231,12 +231,12 @@ const BookingModal = ({ isOpen, onClose, selectedService }: BookingModalProps) =
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="educationLevel" className="text-foreground">
+              <Label htmlFor="levelOfEducation" className="text-foreground">
                 Level of Education
               </Label>
               <Select
-                value={formData.educationLevel}
-                onValueChange={(value) => handleInputChange('educationLevel', value)}
+                value={formData.levelOfEducation}
+                onValueChange={(value) => handleInputChange('levelOfEducation', value)}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Select your education level" />
@@ -252,13 +252,13 @@ const BookingModal = ({ isOpen, onClose, selectedService }: BookingModalProps) =
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="comments" className="text-foreground">
+              <Label htmlFor="additionalComments" className="text-foreground">
                 Additional Comments
               </Label>
               <Textarea
-                id="comments"
-                value={formData.comments}
-                onChange={(e) => handleInputChange('comments', e.target.value)}
+                id="additionalComments"
+                value={formData.additionalComments}
+                onChange={(e) => handleInputChange('additionalComments', e.target.value)}
                 placeholder="Any specific questions or requirements?"
                 rows={3}
               />
@@ -275,7 +275,7 @@ const BookingModal = ({ isOpen, onClose, selectedService }: BookingModalProps) =
               </Button>
               <Button
                 type="submit"
-                disabled={isSubmitting || !formData.fullName || !formData.email || !formData.phone}
+                disabled={isSubmitting || !formData.fullName || !formData.email || !formData.phoneNumber}
                 className="flex-1 bg-primary hover:bg-primary-dark text-primary-foreground"
               >
                 {isSubmitting ? 'Booking...' : 'Book Consultation'}
